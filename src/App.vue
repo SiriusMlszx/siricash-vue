@@ -1,12 +1,6 @@
 <template>
   <div>App
     <router-view/>
-    <hr/>
-    <div>
-      <router-link to="/money" >记账</router-link>|
-      <router-link to="/Labels" >标签</router-link>|
-      <router-link to="/Statistics" >统计</router-link>
-    </div>
   </div>
 </template>
 
