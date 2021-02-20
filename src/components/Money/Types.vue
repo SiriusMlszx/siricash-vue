@@ -8,16 +8,11 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import {Prop, Component} from "vue-property-decorator";
+import {Component} from "vue-property-decorator";
 
 @Component
 export default class Types extends Vue {
   type = "-"; // '-'表示支出 ‘+’表示收入
-  @Prop(Number) xxx: number | undefined;
-  // Props告诉Vue.xxx不是data是props
-  // Number告诉Vue xxx运行时是个Number
-  // xxx是属性名
-  // number | undefined告诉TS xxx的编译时类型
   selectType(type: string) {
     if (type !== "-" && type !== "+") {
       throw new Error("type is unknown");
