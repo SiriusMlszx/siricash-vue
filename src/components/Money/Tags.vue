@@ -20,7 +20,7 @@ import {Component, Prop} from "vue-property-decorator";
 
 @Component
 export default class Tags extends Vue {
-  @Prop() dataSource: string[] | undefined;
+  @Prop(Array) dataSource: string[] | undefined;
   // Props告诉Vue.xxx不是data是props
   // Number告诉Vue xxx运行时是个Number
   // xxx是属性名
@@ -34,6 +34,7 @@ export default class Tags extends Vue {
     } else {
       this.selectedTags.push(tag);
     }
+    this.$emit('update:value',this.selectedTags)
   }
   create(){
     const name = window.prompt('请输入标签名')
