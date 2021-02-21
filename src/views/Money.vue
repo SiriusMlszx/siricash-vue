@@ -22,14 +22,15 @@ type Record = {
   tags: string[];
   notes: string;
   type: string;
-  amount: number;
+  amount: number; // 数据类型
+  createdAt?: Date; // 类 / 构造函数
 }
 @Component({
   components: {Tags, Notes, Types, NumberPad},
 })
 export default class Money extends Vue {
   tags = ["衣", "食", "住", "行"];
-  recordList: Record[] = [];
+  recordList: Record[] = JSON.parse(window.localStorage.getItem("recordList") || "[]");
   record: Record = {tags: [], notes: "", type: "-", amount: 0};
 
   onUpdateTags(value: string[]) {
@@ -41,7 +42,8 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    const record2 = JSON.parse(JSON.stringify(this.record))
+    const record2: Record = JSON.parse(JSON.stringify(this.record));
+    record2.createdAt = new Date();
     this.recordList.push(record2);
   }
 
