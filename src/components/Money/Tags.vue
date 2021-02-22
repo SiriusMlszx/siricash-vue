@@ -1,10 +1,10 @@
 <template>
   <div class="tags">
     <div class="new">
-      <button @click="create">新增标签</button>
+      <button @click="createTag">新增标签</button>
     </div>
     <ul class="current">
-      <li v-for="tag in dataSource" :key="tag.id"
+      <li v-for="tag in tagList" :key="tag.id"
           :class="{selected: selectedTags.indexOf(tag)>= 0}"
           @click="toggle(tag)">
         {{ tag.name }}
@@ -15,18 +15,23 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import {Component, Prop} from "vue-property-decorator";
+import {Component} from "vue-property-decorator";
+import TagHelper from "@/mixins/TagHelper";
+import {mixins} from "vue-class-component";
 
-@Component
-export default class Tags extends Vue {
-  @Prop(Array) dataSource: string[] | undefined;
-  // Props告诉Vue.xxx不是data是props
-  // Number告诉Vue xxx运行时是个Number
-  // xxx是属性名
-  // number | undefined告诉TS xxx的编译时类型
+@Component({
+  computed: {
+    tagList(){
+      return this.$store.state.tagList;
+    }
+  }
+})
+export default class Tags extends mixins(TagHelper) {
+  // tagList = store.fetchTags();
   selectedTags: string[] = [];
-
+  created(){
+    this.$store.commit('fetchTags')
+  }
   toggle(tag: string) {
     const index = this.selectedTags.indexOf(tag);
     if (index >= 0) {
@@ -34,16 +39,12 @@ export default class Tags extends Vue {
     } else {
       this.selectedTags.push(tag);
     }
-    this.$emit('update:value',this.selectedTags)
+    this.$emit("update:value", this.selectedTags);
   }
   create(){
     const name = window.prompt('请输入标签名')
-    if(name === ''){
-      window.alert('标签名不能为空')
-    }else if(this.dataSource){
-      console.log(this.dataSource);
-      this.$emit('update:dataSource',[...this.dataSource, name])
-    }
+    if(!name){return window.alert('标签名不能为空')}
+    this.$store.commit('createTag', name)
   }
 }
 </script>

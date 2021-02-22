@@ -16,25 +16,23 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
+import Component, {mixins} from "vue-class-component";
 import Button from "@/components/Button.vue";
-import store from '@/store/index2.ts';
+import TagHelper from "@/mixins/TagHelper";
 @Component({
-  components: {Button}
-})
-export default class Labels extends Vue {
-  tags = store.tagList;
-
-  createTag() {
-    const name = store.prompt("请输入标签名");
-    if (name) {
-      store.createTag(name);
+  components: {Button},
+  computed:{
+    tags(){
+      return this.$store.tagList;
     }
+  }
+})
+export default class Labels extends mixins(TagHelper) {
+  beforeCreate(){
+    this.$store.commit('fetchTags')
   }
 }
 </script>
-
 <style lang="scss" scoped>
 .tags {
   background: white;
