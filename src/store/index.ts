@@ -5,11 +5,7 @@ import createId from "@/lib/createId";
 import router from "@/router";
 
 Vue.use(Vuex); // 把store绑到Vue.prototype上
-type RootState = {
-    recordList: RecordItem[];
-    tagList: Tag[];
-    currentTag?: Tag;
-}
+
 const store = new Vuex.Store({
     state: {
         recordList: [],
@@ -26,11 +22,11 @@ const store = new Vuex.Store({
             if (idList.indexOf(id) >= 0) {
                 const names = state.tagList.map(item => item.name);
                 if (names.indexOf(name) >= 0) {
-                    window.alert('标签名重复了');
+                    window.alert("标签名重复了");
                 } else {
                     const tag = state.tagList.filter(item => item.id === id)[0];
                     tag.name = name;
-                    store.commit('saveTags');
+                    store.commit("saveTags");
                 }
             }
         },
@@ -42,13 +38,13 @@ const store = new Vuex.Store({
                     break;
                 }
             }
-            if(index >= 0){
+            if (index >= 0) {
                 state.tagList.splice(index, 1);
-                store.commit('saveTags');
-                router.back()
+                store.commit("saveTags");
+                router.back();
             } else {
                 window.alert("删除失败");
-              }
+            }
         },
         fetchRecords(state) {
             state.recordList = JSON.parse(window.localStorage.getItem("recordList") || "[]") as RecordItem[];
@@ -56,16 +52,13 @@ const store = new Vuex.Store({
         },
         createRecord(state, record) {
             const record2: RecordItem = clone(record);
-            record2.createdAt = new Date();
+            record2.createdAt = new Date().toISOString();
             state.recordList.push(record2);
             store.commit("saveRecords");
         },
         saveRecords(state) {
             window.localStorage.setItem("recordList", JSON.stringify(state.recordList));
         },
-        // findTag(id: string) {
-        //   return this.tagList.filter(t => t.id === id)[0];
-        // },
         fetchTags(state) {
             return state.tagList = JSON.parse(window.localStorage.getItem("tagList") || "[]");
         },
