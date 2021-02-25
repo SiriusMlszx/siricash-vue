@@ -14,7 +14,7 @@
       </li>
     </ol>
     <div v-else class="noResult">
-      你还没记收入呢兄弟^ ^
+      你还没记呢兄弟^ ^
     </div>
 
   </Layout>
