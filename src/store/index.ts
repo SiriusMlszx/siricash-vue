@@ -9,6 +9,7 @@ Vue.use(Vuex); // 把store绑到Vue.prototype上
 const store = new Vuex.Store({
     state: {
         recordList: [],
+        createRecordError: null,
         tagList: [],
         currentTag: undefined,
     } as RootState,
@@ -50,8 +51,8 @@ const store = new Vuex.Store({
             state.recordList = JSON.parse(window.localStorage.getItem("recordList") || "[]") as RecordItem[];
             return this.recordList;
         },
-        createRecord(state, record) {
-            const record2: RecordItem = clone(record);
+        createRecord(state, record: RecordItem) {
+            const record2 = clone(record);
             record2.createdAt = new Date().toISOString();
             state.recordList.push(record2);
             store.commit("saveRecords");
@@ -60,17 +61,38 @@ const store = new Vuex.Store({
             window.localStorage.setItem("recordList", JSON.stringify(state.recordList));
         },
         fetchTags(state) {
-            return state.tagList = JSON.parse(window.localStorage.getItem("tagList") || "[]");
+            state.tagList = JSON.parse(window.localStorage.getItem("tagList") || "[]");
+            if (!state.tagList || state.tagList.length === 0){
+                store.commit('initialTag','服饰')
+                store.commit('initialTag','干饭')
+                store.commit('initialTag','玩乐')
+                store.commit('initialTag','交通')
+            }
+        },
+        initialTag(state, name: string) {
+            const names = state.tagList.map(item => item.name);
+            if (names.indexOf(name) >= 0) {
+                window.alert("标签名重复啦");
+
+            }else{
+                const id = createId().toString();
+                state.tagList.push({id, name: name});
+                store.commit("saveTags");
+            }
+
         },
         createTag(state, name: string) {
             const names = state.tagList.map(item => item.name);
             if (names.indexOf(name) >= 0) {
                 window.alert("标签名重复啦");
+
+            }else{
+                const id = createId().toString();
+                state.tagList.push({id, name: name});
+                store.commit("saveTags");
+
             }
-            const id = createId().toString();
-            state.tagList.push({id, name: name});
-            store.commit("saveTags");
-            window.alert("添加成功");
+            window.alert('标签添加成功！')
         },
         saveTags(state) {
             window.localStorage.setItem("tagList", JSON.stringify(state.tagList));
