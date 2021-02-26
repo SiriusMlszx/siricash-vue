@@ -68,7 +68,6 @@ export default class Statistics extends Vue {
     const array = [];
     for (let i = 0; i <= 29; i++) {
       const dateString = day(today).subtract(i, "day").format("YYYY-MM-DD");
-      console.log(this.groupedList);
       const found = _.find(this.groupedList, {
         title: dateString
       });
