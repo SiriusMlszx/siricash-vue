@@ -4,12 +4,12 @@
 
 <script lang="ts">
 import {Component, Prop, Vue, Watch} from "vue-property-decorator";
-import echarts, {EChartOption} from "echarts";
+import echarts, {EChartOption, ECharts} from "echarts";
 
 @Component
 export default class Chart extends Vue {
   @Prop() options?: EChartOption;
-  chart?: echarts;
+  chart?: ECharts;
   mounted() {
     if (this.options === undefined) {
       return console.error('options 为空')
