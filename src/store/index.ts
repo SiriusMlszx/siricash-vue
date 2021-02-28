@@ -17,17 +17,33 @@ const store = new Vuex.Store({
         setCurrentTag(state, id: string) {
             state.currentTag = state.tagList.filter(t => t.id === id)[0];
         },
+        deleteRecord(state, item: any){
+            const confirm = window.confirm('要删除这个记录吗？')
+            if(confirm){
+                const recordList = JSON.parse(window.localStorage.recordList)
+                for (let i = 0; i < recordList.length; i++) {
+                    if(recordList[i].createdAt === item.createdAt){
+                        state.recordList.splice(i, 1)
+                        store.commit("saveRecords");
+                    }
+                }
+            }else{
+                return
+            }
+        },
         updateTag(state, payload: { id: string; name: string }) {
             const {id, name} = payload;
             const idList = state.tagList.map(item => item.id);
             if (idList.indexOf(id) >= 0) {
                 const names = state.tagList.map(item => item.name);
+                console.log(names.indexOf(name));
                 if (names.indexOf(name) >= 0) {
-                    window.alert("标签名重复了");
+                    window.alert('标签名重复啦');
+
                 } else {
                     const tag = state.tagList.filter(item => item.id === id)[0];
                     tag.name = name;
-                    store.commit("saveTags");
+                    store.commit('saveTags');
                 }
             }
         },
@@ -64,9 +80,13 @@ const store = new Vuex.Store({
             state.tagList = JSON.parse(window.localStorage.getItem("tagList") || "[]");
             if (!state.tagList || state.tagList.length === 0){
                 store.commit('initialTag','服饰')
-                store.commit('initialTag','干饭')
+                store.commit('initialTag','吃饭')
                 store.commit('initialTag','玩乐')
                 store.commit('initialTag','交通')
+                store.commit('initialTag','工资')
+                store.commit('initialTag','股票')
+                store.commit('initialTag','基金')
+                store.commit('initialTag','红包')
             }
         },
         initialTag(state, name: string) {
@@ -90,9 +110,9 @@ const store = new Vuex.Store({
                 const id = createId().toString();
                 state.tagList.push({id, name: name});
                 store.commit("saveTags");
-
+                window.alert('标签添加成功！')
             }
-            window.alert('标签添加成功！')
+
         },
         saveTags(state) {
             window.localStorage.setItem("tagList", JSON.stringify(state.tagList));

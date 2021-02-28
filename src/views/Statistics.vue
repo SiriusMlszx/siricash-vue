@@ -8,7 +8,7 @@
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">{{ beautify(group.title) }}<span>￥{{ group.total }}</span></h3>
         <ol>
-          <li v-for="item in group.items" :key="item.id" class="record">
+          <li v-for="item in group.items" :key="item.id" class="record" @click="deleteRecord(item)">
             <span>{{ tagString(item.tags) }}</span>
             <span class="notes">{{ item.notes }}</span>
             <span>￥{{ item.amount }}</span>
@@ -39,6 +39,9 @@ import day from "dayjs";
   components: {Tabs, Chart},
 })
 export default class Statistics extends Vue {
+  deleteRecord(item: any){
+    this.$store.commit('deleteRecord', item);
+  }
   tagString(tags: Tag[]) {
     return tags.length === 0 ? "无标签" : tags.map(t => t.name).join("，");
   }

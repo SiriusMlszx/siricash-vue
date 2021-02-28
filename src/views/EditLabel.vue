@@ -6,13 +6,13 @@
       <span class="rightIcon"></span>
     </div>
     <div class="form-wrapper">
-      <FormItem :value="currentTag.name"
+      <FormItem class="form-item" :value="currentTag.name"
                 @update:value="update"
                 field-name="标签名"
                 placeholder="请输入标签名"/>
     </div>
     <div class="button-wrapper">
-      <Button @click="remove">删除标签</Button>
+      <Button class="button" @click="remove">删除标签</Button>
     </div>
   </Layout>
 </template>
@@ -88,11 +88,17 @@ export default class EditLabel extends Vue {
 .form-wrapper {
   background: white;
   margin-top: 8px;
+  > .form-item{
+    background: #FF879D;
+  }
 }
 
 .button-wrapper {
   text-align: center;
   padding: 16px;
   margin-top: 44-16px;
+}
+.button{
+  background: #FF879D;
 }
 </style>
