@@ -56,8 +56,9 @@ export default class Tags extends mixins(TagHelper) {
     overflow: auto;
 
     > li {
-      $bg: #d9d9d9;
+      $bg: #FF879D;
       background: $bg;
+      color: white;
       $h: 24px;
       height: $h;
       border-radius: (24px/2);
@@ -65,6 +66,7 @@ export default class Tags extends mixins(TagHelper) {
       padding: 0 16px;
       margin-right: 12px;
       margin-top: 4px;
+
 
       &.selected {
         background: darken($bg, 50%);
@@ -80,7 +82,7 @@ export default class Tags extends mixins(TagHelper) {
       background: transparent;
       border: none;
       border-bottom: 1px solid;
-      color: #999;
+      color: #FF879D;
       padding: 0 4px;
     }
   }

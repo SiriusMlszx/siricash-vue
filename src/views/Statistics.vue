@@ -100,7 +100,7 @@ export default class Statistics extends Vue {
         type: "category",
         data: keys,
         axisTick: {alignWithLabel: true},
-        axisLine: {lineStyle: {color: "#666"}},
+        axisLine: {lineStyle: {color: "#FF879D"}},
         axisLabel:{
           formatter:function(value: string){
             return value.substr(5)
@@ -114,7 +114,7 @@ export default class Statistics extends Vue {
       series: [{
         symbol: "circle",
         symbolSize: 12,
-        itemStyle: {borderWidth: 1, color: "#666", borderColor: "#666"},
+        itemStyle: {borderWidth: 1, color: "#FF879D", borderColor: "#FF879D"},
         data: values,
         type: "line"
       }],
@@ -173,10 +173,10 @@ export default class Statistics extends Vue {
 
 ::v-deep {
   .type-tabs-item {
-    background: #c4c4c4;
+    background:#FFBAC6 ;
 
     &.selected {
-      background: white;
+      background: #FF879D;
 
       &::after {
         display: none;
@@ -213,6 +213,7 @@ export default class Statistics extends Vue {
 }
 
 .chart {
+  height: 300px;
   width: 430%;
 
   &-wrapper {

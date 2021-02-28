@@ -11,7 +11,7 @@
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #333;
+  color: #FF879D;
   line-height: 1.5;
   font-family: $font-hei;
   font-size: 16px;

@@ -9,7 +9,7 @@ import echarts, {EChartOption} from "echarts";
 @Component
 export default class Chart extends Vue {
   @Prop() options?: EChartOption;
-  chart?: ECharts;
+  chart?: echarts;
   mounted() {
     if (this.options === undefined) {
       return console.error('options 为空')
@@ -27,6 +27,6 @@ export default class Chart extends Vue {
 
 <style lang="scss" scoped>
 .wrapper {
-  height: 400px;
+  height: 300px;
 }
 </style>

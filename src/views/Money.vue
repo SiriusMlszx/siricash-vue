@@ -63,8 +63,15 @@ export default class Money extends Vue {
   flex-direction: column-reverse;
 }
 .notes{
-  padding: 12px 0;
+  ::-webkit-input-placeholder {
+    color: #FFEFEF;
+  };
+  background-color: #FFBAC6;
 }
+.createdAt{
+  background-color: #FFBAC6;
+}
+
 </style>
 <style lang="scss" scoped>
 </style>
